@@ -10,11 +10,9 @@ import { Database } from 'bun:sqlite'
              age INTEGER
            )
            `).run()
-
   const result = db.query(`
-         SELECT first_name, last_name,age FROM people
-         `).all() as Person[]
-
+         SELECT DISTINCT first_name, last_name,age FROM people
+         `).all()
   for (let row of result) {
     console.log(`
   first name ${row.first_name}
@@ -22,10 +20,5 @@ import { Database } from 'bun:sqlite'
   age ${row.age}
                 `)
   }
-  console.log(db.query('SELECT COUNT(*) as total_people FROM people').get())
-  console.log(db.query('SELECT COUNT(*) as total_barnes_family_members FROM people WHERE last_name="Barnes"').get())
-  console.log('\n the oldest barnes family members are:')
-  console.log(db.query('SELECT * FROM people WHERE last_name="Barnes" ORDER BY age DESC LIMIT 5').all())
 }
-
 
